@@ -1,12 +1,13 @@
 from .base_page import BasePage
 from .locators import ProductPageLocators
+from .url import ProductPageUrl
 
 
 class ProductPage(BasePage):
 
     def should_be_product_url(self):
         current_url = self.browser.current_url
-        assert "the-shellcoders-handbook" in current_url, "AT ERROR! It's not correct item!"
+        assert (ProductPageUrl.THE_SHELLCODERS_HANDBOOK) in current_url, "AT ERROR! It's not correct item!"
 
     def add_item_to_basket(self):
         self.browser.find_element(*ProductPageLocators.ADD_CART).click()
@@ -22,12 +23,10 @@ class ProductPage(BasePage):
         assert item_name == notification_item_name, \
             f"AT ERROR! Can't find message '{item_name}' in notification"
 
-
     def should_be_total_price_notification(self):
         self.browser.find_element(*ProductPageLocators.ADD_CART).click()
         assert self.is_element_present(*ProductPageLocators.NOTIFICATION_TOTAL_PRICE), \
             "AT ERROR! Notification of total price doesn't exist"
-
 
     def excepted_total_price_of_items(self):
         self.browser.find_element(*ProductPageLocators.ADD_CART).click()
