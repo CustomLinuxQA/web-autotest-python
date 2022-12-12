@@ -2,6 +2,7 @@ from .base_page import BasePage
 from .locators import ProductPageLocators
 from .url import ProductPageUrl
 from selenium.common.exceptions import NoAlertPresentException
+import pytest
 import math
 
 
@@ -22,7 +23,7 @@ class ProductPage(BasePage):
             print("No second alert presented")
 
     def check_promo(self):
-        if (ProductPageUrl.THE_SHELLCODERS_HANDBOOK_PROMO) in self.url:
+        if (ProductPageUrl.THE_SHELLCODERS_HANDBOOK_PROMO_LINK) in self.url:
             print("\npromo detected..")
             self.solve_quiz_and_get_code()
         else:
@@ -30,8 +31,11 @@ class ProductPage(BasePage):
 
     def should_be_product_url(self):
         current_url = self.browser.current_url
-        assert (ProductPageUrl.THE_SHELLCODERS_HANDBOOK) in current_url, "AT ERROR! It's not correct item!"
+        print(f"{ProductPageUrl.THE_SHELLCODERS_HANDBOOK_ENDPOINT}")
+        print(f"{current_url}")
+        assert (ProductPageUrl.THE_SHELLCODERS_HANDBOOK_ENDPOINT) in current_url, "AT ERROR! It's not correct item!"
 
+    @pytest.mark.without_localization
     def add_item_to_basket(self):
         self.browser.find_element(*ProductPageLocators.ADD_CART).click()
         self.check_promo()
