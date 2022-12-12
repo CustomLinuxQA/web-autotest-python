@@ -26,7 +26,7 @@ def test_guest_can_see_total_price_in_notification(browser):
     link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/"
     page = ProductPage(browser, link)
     page.open()
-    page.should_be_total_price_notification()  # Проверка соответствия названия товара в уведомлении.
+    page.should_be_total_price_notification()  # Проверка соответствия цены товара в уведомлении.
 
 def test_guest_can_see_total_price_of_items(browser):
     link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/"
