@@ -10,16 +10,17 @@ class ProductPage(BasePage):
 
     def add_item_to_basket(self):
         self.browser.find_element(*ProductPageLocators.ADD_CART).click()
-        text_notification = self.browser.find_element(*ProductPageLocators.NOTIFICATION_ADD_TO_BASKET).text
-        assert "has been added to your basket" in text_notification, \
-            "AT ERROR! No message '{ITEM} has been added to your basket'"
+        notification_add_to_basket = self.browser.find_element(*ProductPageLocators.NOTIFICATION_ADD_TO_BASKET).text
+        item_name = self.browser.find_element(*ProductPageLocators.ITEM_NAME).text
+        assert "has been added to your basket" in notification_add_to_basket, \
+            f"AT ERROR! No message - '{item_name} has been added to your basket'"
 
     def excepted_item_name_in_notification(self):
         self.browser.find_element(*ProductPageLocators.ADD_CART).click()
         notification_item_name = self.browser.find_element(*ProductPageLocators.NOTIFICATION_ITEM_NAME).text
-        product_name = self.browser.find_element(*ProductPageLocators.ITEM_NAME).text
-        assert product_name == notification_item_name, \
-            f"AT ERROR! Can't find message '{product_name}' in notification"
+        item_name = self.browser.find_element(*ProductPageLocators.ITEM_NAME).text
+        assert item_name == notification_item_name, \
+            f"AT ERROR! Can't find message '{item_name}' in notification"
 
 
     def should_be_total_price_notification(self):
