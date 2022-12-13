@@ -1,6 +1,6 @@
 from .base_page import BasePage
 from .locators import ProductPageLocators
-from .url import ProductPageUrl
+from .url_rout import ProductPageUrl
 from selenium.common.exceptions import NoAlertPresentException
 import pytest
 import math
@@ -23,17 +23,15 @@ class ProductPage(BasePage):
             print("No second alert presented")
 
     def check_promo(self):
-        if (ProductPageUrl.THE_SHELLCODERS_HANDBOOK_PROMO_LINK) in self.url:
+        if (ProductPageUrl.PROMO_BUG_URL) in self.url:
             print("\npromo detected..")
             self.solve_quiz_and_get_code()
         else:
             print("\ntest without promo ..")
 
-    def should_be_product_url(self):
+    def should_be_product_url(self):    # Ужасная проверка. Нужно подумать ещё.
         current_url = self.browser.current_url
-        print(f"{ProductPageUrl.THE_SHELLCODERS_HANDBOOK_ENDPOINT}")
-        print(f"{current_url}")
-        assert (ProductPageUrl.THE_SHELLCODERS_HANDBOOK_ENDPOINT) in current_url, "AT ERROR! It's not correct item!"
+        assert "catalogue" in current_url, "AT ERROR! It's not correct item!"
 
     @pytest.mark.without_localization
     def add_item_to_basket(self):
@@ -48,15 +46,19 @@ class ProductPage(BasePage):
         self.browser.find_element(*ProductPageLocators.ADD_CART).click()
         self.check_promo()
         notification_item_name = self.browser.find_element(*ProductPageLocators.NOTIFICATION_ITEM_NAME).text
+        print(notification_item_name)
         item_name = self.browser.find_element(*ProductPageLocators.ITEM_NAME).text
+        print(item_name)
         assert item_name == notification_item_name, \
             f"AT ERROR! Can't find message '{item_name}' in notification"
 
-    def should_be_total_price_notification(self):
+    def should_be_correct_total_price_notification(self):
         self.browser.find_element(*ProductPageLocators.ADD_CART).click()
         self.check_promo()
-        assert self.is_element_present(*ProductPageLocators.NOTIFICATION_TOTAL_PRICE), \
-            "AT ERROR! Notification of total price doesn't exist"
+        notification_item_price = self.browser.find_element(*ProductPageLocators.NOTIFICATION_TOTAL_PRICE).text  #
+        basket_total_price = self.browser.find_element(*ProductPageLocators.BASKET_TOTAL_PRICE).text
+        assert str(notification_item_price) in str(basket_total_price), \
+            "AT ERROR! Notification of total price is not equal to the price in the cart"
 
     def excepted_total_price_of_items(self):
         self.browser.find_element(*ProductPageLocators.ADD_CART).click()
