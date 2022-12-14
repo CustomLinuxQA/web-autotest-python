@@ -109,7 +109,7 @@ class TestGuestFromProductPage():
 
 
 @pytest.mark.login
-class TestLoginFromProductPage():
+class TestUserAddToBasketFromProductPage():
     @pytest.fixture(scope="function")
     def setup(self, browser, test_link):
         page = LoginPage(browser, test_link)
