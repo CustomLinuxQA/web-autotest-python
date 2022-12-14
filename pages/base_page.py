@@ -3,7 +3,6 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from .locators import BasePageLocators
-from .locators import LoginPageLocators
 
 
 class BasePage():
@@ -42,11 +41,11 @@ class BasePage():
     def go_to_login_page(self):
         self.browser.find_element(*BasePageLocators.LOGIN_LINK).click()
 
+    def go_to_account_page(self):
+        self.browser.find_element(*BasePageLocators.USER_ICON).click()
+
+    def go_to_basket(self):
+        self.browser.find_element(*BasePageLocators.BASKET_LOCATOR).click()
+
     def should_be_login_link(self):
         assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "AT ERROR! Login link is not presented"
-
-    def should_be_login_form(self):
-        assert self.is_element_present(*LoginPageLocators.LOGIN_FORM), "AT ERROR! Login form is not presented"
-
-    def should_be_register_form(self):
-        assert self.is_element_present(*LoginPageLocators.REGISTER_FORM), "AT ERROR! Register form is not presented"

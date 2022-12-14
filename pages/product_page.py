@@ -1,12 +1,15 @@
 from .base_page import BasePage
 from .locators import ProductPageLocators
 from .url_rout import ProductPageUrl
+from .url_rout import ProductBugPageUrl    # BUG TUSK lesson3_step4.
 from selenium.common.exceptions import NoAlertPresentException
-import pytest
 import math
 
 
 class ProductPage(BasePage):
+
+    def __init__(self, *args, **kwargs):
+        super(ProductPage, self).__init__(*args, **kwargs)
 
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
@@ -23,28 +26,29 @@ class ProductPage(BasePage):
             print("No second alert presented")
 
     def check_promo(self):
-        if (ProductPageUrl.PROMO_BUG_URL) in self.url:
-            print("\npromo detected..")
+        if (ProductPageUrl.PROMO_URL) in self.url:
+            print("\nAT! Promo detected..")
+            self.solve_quiz_and_get_code()
+        elif (ProductBugPageUrl.PROMO_URL) in self.url:    # BUG TUSK lesson3_step4.
+            print("\nAT! Promo detected..")
             self.solve_quiz_and_get_code()
         else:
-            print("\ntest without promo ..")
+            print("\nAT! Test without promo ..")
 
-    @pytest.mark.without_localization
-    def add_item_to_basket(self):
+
+    def add_item_to_basket(self):    # @pytest.mark.without_localization
         self.browser.find_element(*ProductPageLocators.ADD_CART).click()
         self.check_promo()
         notification_add_to_basket = self.browser.find_element(*ProductPageLocators.NOTIFICATION_ADD_TO_BASKET).text
         item_name = self.browser.find_element(*ProductPageLocators.ITEM_NAME).text
         assert "has been added to your basket" in notification_add_to_basket, \
-            f"AT ERROR! No message - '{item_name} has been added to your basket'"
+            f"AT ERROR! No message - '{item_name} has been added to your basket' or language is not en-gb"
 
     def excepted_item_name_in_notification(self):
         self.browser.find_element(*ProductPageLocators.ADD_CART).click()
         self.check_promo()
         notification_item_name = self.browser.find_element(*ProductPageLocators.NOTIFICATION_ITEM_NAME).text
-        print(notification_item_name)
         item_name = self.browser.find_element(*ProductPageLocators.ITEM_NAME).text
-        print(item_name)
         assert item_name == notification_item_name, \
             f"AT ERROR! Can't find message '{item_name}' in notification"
 
