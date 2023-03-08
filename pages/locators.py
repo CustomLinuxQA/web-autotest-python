@@ -38,6 +38,15 @@ class ProductPageLocators():
     BASKET_TOTAL_PRICE = (By.CSS_SELECTOR, ".basket-mini")
     ITEM_PRICE = (By.CSS_SELECTOR, ".product_main p.price_color")
     NOTIFICATION_ADD_TO_BASKET = (By.CSS_SELECTOR, "div[id='messages'] div:nth-child(1) div")
-    NOTIFICATION_ITEM_NAME = (By.CSS_SELECTOR, "div[id='messages'] div:nth-child(1) strong")
+    NOTIFICATION_ITEM_NAME = (By.CSS_SELECTOR, ".alert-success:nth-child(1) strong")
     NOTIFICATION_TOTAL_PRICE = (By.CSS_SELECTOR, "div[id='messages'] div:nth-child(3) strong")
     NOTIFICATION_SUCCESS_MESSAGE = (By.CSS_SELECTOR, "div[id='messages'] div:nth-child(2) div strong")
+
+class TestList():
+
+    TEXT_NOTIFICATION_IN_BASKET = [
+        "The shellcoder's handbook has been added to your basket.",
+        "The shellcoder's handbook был добавлен в вашу корзину.",
+        "Coders at Work has been added to your basket.",
+        "Coders at Work был добавлен в вашу корзину."
+    ]

@@ -29,4 +29,4 @@ def test_guest_cant_see_product_in_basket_opened_from_main_page(browser, test_li
     page.should_be_basket_button()
     page.go_to_basket()
     page.should_be_empty_basket()  # Проверка пустой корзины.
-    page.excepted_message_basket_is_empty()  # Проверка сообщения "Your basket is empty".
+    page.expected_message_basket_is_empty()  # Проверка сообщения "Your basket is empty".

@@ -25,39 +25,39 @@ class TestGuestFromProductPage():
 
 
     @pytest.mark.parametrize("test_link", ProductTestLink.TEST_LINK)
-    def test_guest_can_see_added_item_in_notification(sekf, browser, test_link):
+    def test_guest_can_see_added_item_in_notification(self, browser, test_link):
         page = ProductPage(browser, test_link)
         page.open()
-        page.excepted_item_name_in_notification()  # Проверка соответствия названия товара в уведомлении.
+        page.expected_item_name_in_notification()  # Проверка соответствия названия товара в уведомлении.
 
 
     @pytest.mark.parametrize("test_link", ProductBugTestLink.TEST_LINK)
     @pytest.mark.bug_task
     @pytest.mark.xfail
-    def test_guest_can_see_added_item_in_notification(sekf, browser, test_link):
+    def test_guest_can_see_added_item_in_notification(self, browser, test_link):
         page = ProductPage(browser, test_link)
         page.open()
-        page.excepted_item_name_in_notification()  # Проверка соответствия названия товара в уведомлении.
+        page.expected_item_name_in_notification()  # Проверка соответствия названия товара в уведомлении.
 
 
     @pytest.mark.parametrize("test_link", ProductTestLink.TEST_LINK)
-    def test_guest_can_see_total_price_in_notification(sekf, browser, test_link):
+    def test_guest_can_see_total_price_in_notification(self, browser, test_link):
         page = ProductPage(browser, test_link)
         page.open()
         page.should_be_correct_total_price_notification()  # Проверка соответствия цены товара в уведомлении.
 
 
     @pytest.mark.parametrize("test_link", ProductTestLink.TEST_LINK)
-    def test_guest_can_see_total_price_of_items(sekf, browser, test_link):
+    def test_guest_can_see_total_price_of_items(self, browser, test_link):
         page = ProductPage(browser, test_link)
         page.open()
-        page.excepted_total_price_of_items()  # Стоимость корзины совпадает с ценой товара.
+        page.expected_total_price_of_items()  # Стоимость корзины совпадает с ценой товара.
 
 
     @pytest.mark.parametrize("test_link", ProductTestLink.TEST_LINK)
     @pytest.mark.without_localization
     @pytest.mark.xfail
-    def test_guest_cant_see_success_message_after_adding_product_to_basket(sekf, browser, test_link):
+    def test_guest_cant_see_success_message_after_adding_product_to_basket(self, browser, test_link):
         page = ProductPage(browser, test_link)
         page.open()
         page.add_item_to_basket()
@@ -65,7 +65,7 @@ class TestGuestFromProductPage():
 
 
     @pytest.mark.parametrize("test_link", ProductTestLink.TEST_LINK)
-    def test_guest_cant_see_success_message(sekf, browser, test_link):
+    def test_guest_cant_see_success_message(self, browser, test_link):
         page = ProductPage(browser, test_link)
         page.open()
         page.should_not_be_success_message()  # Проверка отсутствия успешного добавления товара.
@@ -74,7 +74,7 @@ class TestGuestFromProductPage():
     @pytest.mark.parametrize("test_link", ProductTestLink.TEST_LINK)
     @pytest.mark.without_localization
     @pytest.mark.xfail
-    def test_message_disappeared_after_adding_product_to_basket(sekf, browser, test_link):
+    def test_message_disappeared_after_adding_product_to_basket(self, browser, test_link):
         page = ProductPage(browser, test_link)
         page.open()
         page.add_item_to_basket()
@@ -82,7 +82,7 @@ class TestGuestFromProductPage():
 
 
     @pytest.mark.parametrize("test_link", ProductTestLink.TEST_LINK)
-    def test_guest_should_see_login_link_on_product_page(sekf, browser, test_link):
+    def test_guest_should_see_login_link_on_product_page(self, browser, test_link):
         page = ProductPage(browser, test_link)
         page.open()
         page.should_be_login_link()  # Проверка наличия кнопки Login or Register.
@@ -90,7 +90,7 @@ class TestGuestFromProductPage():
 
     @pytest.mark.parametrize("test_link", ProductTestLink.TEST_LINK)
     @pytest.mark.need_review
-    def test_guest_can_go_to_login_page_from_product_page(sekf, browser, test_link):
+    def test_guest_can_go_to_login_page_from_product_page(self, browser, test_link):
         page = LoginPage(browser, test_link)
         page.open()
         page.go_to_login_page()
@@ -100,12 +100,12 @@ class TestGuestFromProductPage():
     @pytest.mark.parametrize("test_link", ProductTestLink.TEST_LINK)
     @pytest.mark.without_localization
     @pytest.mark.need_review
-    def test_guest_cant_see_product_in_basket_opened_from_product_page(sekf, browser, test_link):
+    def test_guest_cant_see_product_in_basket_opened_from_product_page(self, browser, test_link):
         page = MainPage(browser, test_link)
         page.open()
         page.go_to_basket()
         page.should_be_empty_basket()  # Проверка пустой корзины.
-        page.excepted_message_basket_is_empty()  # Проверка сообщения "Your basket is empty".
+        page.expected_message_basket_is_empty()  # Проверка сообщения "Your basket is empty".
 
 
 @pytest.mark.login
