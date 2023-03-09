@@ -31,13 +31,13 @@ class ProductPage(BasePage):
 
     def check_promo(self):
         if (ProductPageUrl.PROMO_URL) in self.url:
-            print("\nAT! Promo detected ..")
+            print("\nAT! Promo detected  ..")
             self.solve_quiz_and_get_code()
         elif (ProductBugPageUrl.PROMO_URL) in self.url:  # BUG TUSK lesson3_step4.
-            print("\nAT! Promo detected ..")
+            print("\nAT! Promo detected  ..")
             self.solve_quiz_and_get_code()
         else:
-            print("\nAT! Test without promo ..")
+            print("\nAT! Test without promo  ..")
 
     @allure.story('Проверка аллюр стори')
     @allure.severity('critical')
