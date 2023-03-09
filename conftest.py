@@ -12,7 +12,7 @@ geckodriver_autoinstaller.install()
 def pytest_addoption(parser):
     parser.addoption('--browser_name', action='store', default='chrome',
                      help="Choose browser: e.g. '--browser_name=chrome' or '--browser_name=firefox'")
-
+#
     parser.addoption('--language', action='store', default='en',
                      help="Choose language: e.g. '--language=en' or '--language=ru'")
 
