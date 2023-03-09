@@ -6,6 +6,7 @@ class BasePageLocators():
     LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
     BASKET_LOCATOR = (By.CSS_SELECTOR, "a[class$='btn-default']")
     USER_ICON = (By.CSS_SELECTOR, ".icon-user")
+    PAGE_NOT_FOUND = (By.CSS_SELECTOR, ".jumbotron")
 
 
 class BasketPageLocators():
@@ -44,7 +45,7 @@ class ProductPageLocators():
 
 class TestList():
 
-    TEXT_NOTIFICATION_IN_BASKET = [
+    TEXT_NOTIFICATION_IN_PRODUCT_PAGE = [
         "The shellcoder's handbook has been added to your basket.",
         "The shellcoder's handbook был добавлен в вашу корзину.",
         "Coders at Work has been added to your basket.",
