@@ -5,6 +5,8 @@ from .url_rout import ProductBugPageUrl    # BUG TUSK lesson3_step4.
 from .locators import TestList
 from selenium.common.exceptions import NoAlertPresentException
 import math
+import allure
+from allure_commons.types import AttachmentType
 
 
 class ProductPage(BasePage):
@@ -31,16 +33,19 @@ class ProductPage(BasePage):
             print("\nAT! Promo detected ..")
             self.solve_quiz_and_get_code()
         elif (ProductBugPageUrl.PROMO_URL) in self.url:    # BUG TUSK lesson3_step4.
-            print("\nAT! Promo detected..")
+            print("\nAT! Promo detected ..")
             self.solve_quiz_and_get_code()
         else:
             print("\nAT! Test without promo ..")
 
-
+    @allure.story('Проверка аллюр стори')
+    @allure.severity('critical')
     def add_item_to_basket(self):    # @pytest.mark.without_localization
         self.browser.find_element(*ProductPageLocators.ADD_CART).click()
         self.check_promo()
         notification_add_to_basket = self.browser.find_element(*ProductPageLocators.NOTIFICATION_ADD_TO_BASKET).text
+        with allure.step('Делаем скриншот'):
+            allure.attach(self.browser.get_screenshot_as_png(), name='Screenshot', attachment_type=AttachmentType.PNG)
         assert notification_add_to_basket in TestList.TEXT_NOTIFICATION_IN_BASKET, \
             f"AT ERROR! Expected - '{notification_add_to_basket}', actual result - '{notification_add_to_basket}'."
 
