@@ -1,7 +1,8 @@
 from .base_page import BasePage
 from .locators import ProductPageLocators
+from .locators import BasePageLocators
 from .url_rout import ProductPageUrl
-from .url_rout import ProductBugPageUrl    # BUG TUSK lesson3_step4.
+from .url_rout import ProductBugPageUrl  # BUG TUSK lesson3_step4.
 from .locators import TestList
 from selenium.common.exceptions import NoAlertPresentException
 import math
@@ -32,7 +33,7 @@ class ProductPage(BasePage):
         if (ProductPageUrl.PROMO_URL) in self.url:
             print("\nAT! Promo detected ..")
             self.solve_quiz_and_get_code()
-        elif (ProductBugPageUrl.PROMO_URL) in self.url:    # BUG TUSK lesson3_step4.
+        elif (ProductBugPageUrl.PROMO_URL) in self.url:  # BUG TUSK lesson3_step4.
             print("\nAT! Promo detected ..")
             self.solve_quiz_and_get_code()
         else:
@@ -40,13 +41,13 @@ class ProductPage(BasePage):
 
     @allure.story('Проверка аллюр стори')
     @allure.severity('critical')
-    def add_item_to_basket(self):    # @pytest.mark.without_localization
+    def add_item_to_basket(self):  # @pytest.mark.without_localization
         self.browser.find_element(*ProductPageLocators.ADD_CART).click()
         self.check_promo()
         notification_add_to_basket = self.browser.find_element(*ProductPageLocators.NOTIFICATION_ADD_TO_BASKET).text
-        with allure.step('Делаем скриншот'):
+        with allure.step('Method add_item_to_basket'):
             allure.attach(self.browser.get_screenshot_as_png(), name='Screenshot', attachment_type=AttachmentType.PNG)
-        assert notification_add_to_basket in TestList.TEXT_NOTIFICATION_IN_BASKET, \
+        assert notification_add_to_basket in TestList.TEXT_NOTIFICATION_IN_PRODUCT_PAGE, \
             f"AT ERROR! Expected - '{notification_add_to_basket}', actual result - '{notification_add_to_basket}'."
 
     def expected_item_name_in_notification(self):
@@ -54,6 +55,8 @@ class ProductPage(BasePage):
         self.check_promo()
         notification_item_name = self.browser.find_element(*ProductPageLocators.NOTIFICATION_ITEM_NAME).text
         item_name = self.browser.find_element(*ProductPageLocators.ITEM_NAME).text
+        with allure.step('Method expected_item_name_in_notification'):
+            allure.attach(self.browser.get_screenshot_as_png(), name='Screenshot', attachment_type=AttachmentType.PNG)
         assert item_name == notification_item_name, \
             f"AT ERROR! Expected - '{item_name}', actual result - '{notification_item_name}'."
 
@@ -62,14 +65,19 @@ class ProductPage(BasePage):
         self.check_promo()
         basket_total_price = self.browser.find_element(*ProductPageLocators.BASKET_TOTAL_PRICE).text
         item_price = self.browser.find_element(*ProductPageLocators.ITEM_PRICE).text
+        with allure.step('Method expected_total_price_of_items'):
+            allure.attach(self.browser.get_screenshot_as_png(), name='Screenshot', attachment_type=AttachmentType.PNG)
         assert str(item_price) in str(basket_total_price), \
             f"AT ERROR! Expected - '{item_price}', actual result - '{basket_total_price}'."
 
     def should_be_product_url(self):  # Ужасная проверка. Нужно подумать ещё.
         current_url = self.browser.current_url
+        with allure.step('Method should_be_product_url'):
+            allure.attach(self.browser.get_screenshot_as_png(), name='Screenshot', attachment_type=AttachmentType.PNG)
         assert "catalogue" in current_url, \
-            "AT ERROR! It's not correct item!"
-        f"AT ERROR! Expected - 'catalogue' in '{current_url}'."
+            f"AT ERROR! Expected - 'catalogue' in '{current_url}'."
+        assert self.is_not_element_present(*BasePageLocators.PAGE_NOT_FOUND), \
+            f"AT ERROR! This is Page-404."
 
     def should_be_correct_total_price_notification(self):
         self.browser.find_element(*ProductPageLocators.ADD_CART).click()
