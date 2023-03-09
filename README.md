@@ -6,7 +6,9 @@ pytest -v -s --language=ru test/test_product_page.py::TestGuestFromProductPage::
 
 pytest -v --tb=line --language=en -m need_review
 
-16 проверок.
+
+## Команда для генерации allure report
+allure serve allure-report
 
 
 Так же прописал:
